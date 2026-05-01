@@ -1,56 +1,232 @@
 <!DOCTYPE html>
-const lista = document.getElementById('lista');
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chá de Bebê Lucas Henrique</title>
+
+<style>
+body{
+margin:0;
+font-family:Arial,sans-serif;
+background:#f4efe6;
+color:#3d4b35;
+}
+
+header{
+background:#556b2f;
+color:white;
+padding:30px;
+text-align:center;
+}
+
+.container{
+max-width:800px;
+margin:auto;
+padding:20px;
+}
+
+.card{
+background:white;
+padding:15px;
+margin-bottom:15px;
+border-radius:14px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+box-shadow:0 2px 8px rgba(0,0,0,0.08);
+}
+
+button{
+background:#556b2f;
+color:white;
+border:none;
+padding:10px 16px;
+border-radius:8px;
+cursor:pointer;
+}
+
+button:disabled{
+background:gray;
+cursor:not-allowed;
+}
+
+.admin{
+margin-top:40px;
+background:white;
+padding:20px;
+border-radius:14px;
+box-shadow:0 2px 8px rgba(0,0,0,0.08);
+}
+
+input{
+padding:10px;
+width:100%;
+margin-bottom:10px;
+border-radius:8px;
+border:1px solid #ccc;
+box-sizing:border-box;
+}
+
+.hidden{
+display:none;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>Chá de Bebê do Lucas Henrique 💚</h1>
+<p>Escolha um presente com carinho</p>
+</header>
+
+<div class="container">
+
+<div id="lista"></div>
+
+<div class="admin">
+<h2>Área Administrativa</h2>
+
+<input type="password" id="senha" placeholder="Senha">
+<button onclick="login()">Entrar</button>
+
+<div id="painel" class="hidden">
+
+<hr>
+
+<h3>Adicionar presente</h3>
+
+<input type="text" id="novoPresente" placeholder="Nome do presente">
+
+<button onclick="adicionarPresente()">
+Adicionar
+</button>
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+const SENHA = "lucas2026";
+
+let presentes = JSON.parse(localStorage.getItem('presentes')) || [
+
+{nome:'Fralda P', escolhido:false},
+{nome:'Fralda M', escolhido:false},
+{nome:'Banheira', escolhido:false},
+{nome:'Mamadeira', escolhido:false}
+
+];
+
+function salvar(){
+
+localStorage.setItem(
+'presentes',
+JSON.stringify(presentes)
+);
+
+}
+
+function render(){
+
+const lista =
+document.getElementById('lista');
+
 lista.innerHTML = '';
 
 presentes.forEach((item,index)=>{
-const card = document.createElement('div');
+
+const card =
+document.createElement('div');
+
 card.className = 'card';
 
-const nome = document.createElement('span');
+const nome =
+document.createElement('span');
+
 nome.innerText = item.nome;
 
-const botao = document.createElement('button');
+const botao =
+document.createElement('button');
 
 if(item.escolhido){
+
 botao.innerText = 'Escolhido';
 botao.disabled = true;
+
 }else{
+
 botao.innerText = 'Escolher';
+
 botao.onclick = ()=>{
+
 presentes[index].escolhido = true;
+
 salvar();
+
 render();
+
 }
+
 }
 
 card.appendChild(nome);
 card.appendChild(botao);
+
 lista.appendChild(card);
+
 });
+
 }
 
 function login(){
-const senha = document.getElementById('senha').value;
+
+const senha =
+document.getElementById('senha').value;
 
 if(senha === SENHA){
-document.getElementById('painel').classList.remove('hidden');
+
+document
+.getElementById('painel')
+.classList.remove('hidden');
+
 }else{
+
 alert('Senha incorreta');
+
 }
+
 }
 
 function adicionarPresente(){
-const nome = document.getElementById('novoPresente').value;
+
+const nome =
+document.getElementById('novoPresente').value;
 
 if(nome.trim() !== ''){
-presentes.push({nome, escolhido:false});
+
+presentes.push({
+nome,
+escolhido:false
+});
+
 salvar();
+
 render();
-document.getElementById('novoPresente').value = '';
+
+document.getElementById(
+'novoPresente'
+).value = '';
+
 }
+
 }
 
 render();
+
 </script>
 
 </body>
