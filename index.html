@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+const lista = document.getElementById('lista');
+lista.innerHTML = '';
+
+presentes.forEach((item,index)=>{
+const card = document.createElement('div');
+card.className = 'card';
+
+const nome = document.createElement('span');
+nome.innerText = item.nome;
+
+const botao = document.createElement('button');
+
+if(item.escolhido){
+botao.innerText = 'Escolhido';
+botao.disabled = true;
+}else{
+botao.innerText = 'Escolher';
+botao.onclick = ()=>{
+presentes[index].escolhido = true;
+salvar();
+render();
+}
+}
+
+card.appendChild(nome);
+card.appendChild(botao);
+lista.appendChild(card);
+});
+}
+
+function login(){
+const senha = document.getElementById('senha').value;
+
+if(senha === SENHA){
+document.getElementById('painel').classList.remove('hidden');
+}else{
+alert('Senha incorreta');
+}
+}
+
+function adicionarPresente(){
+const nome = document.getElementById('novoPresente').value;
+
+if(nome.trim() !== ''){
+presentes.push({nome, escolhido:false});
+salvar();
+render();
+document.getElementById('novoPresente').value = '';
+}
+}
+
+render();
+</script>
+
+</body>
+</html>
